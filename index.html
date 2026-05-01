@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Construyendo Nación – Weblog de Realidad Nacional</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rojo: #C0392B;
+    --oro: #D4A017;
+    --crema: #F5EDD6;
+    --cafe: #3B2A1A;
+    --cafe-claro: #6B4C2A;
+    --blanco: #FDFAF4;
+    --gris: #7A6A5A;
+    --sombra: rgba(59,42,26,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--blanco);
+    color: var(--cafe);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--cafe);
+    color: var(--crema);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(212,160,23,0.07) 40px,
+        rgba(212,160,23,0.07) 41px
+      );
+  }
+
+  .hero-badge {
+    position: absolute;
+    top: 28px;
+    right: 36px;
+    background: var(--rojo);
+    color: #fff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    padding: 6px 16px;
+    border-radius: 2px;
+  }
+
+  .hero-flag {
+    position: absolute;
+    top: 0; left: 0;
+    width: 10px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--rojo) 33.3%, #fff 33.3%, #fff 66.6%, var(--rojo) 66.6%);
+    opacity: 0.6;
+  }
+
+  .hero-content {
+    position: relative;
+    padding: 48px 56px 52px 72px;
+  }
+
+  .hero-label {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 4px;
+    font-size: 13px;
+    color: var(--oro);
+    margin-bottom: 12px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--crema);
+    max-width: 720px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--oro);
+  }
+
+  .hero-sub {
+    margin-top: 16px;
+    font-size: 15px;
+    color: rgba(245,237,214,0.7);
+    font-style: italic;
+    max-width: 560px;
+  }
+
+  .hero-meta {
+    margin-top: 28px;
+    display: flex;
+    gap: 32px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 13px;
+    color: rgba(245,237,214,0.55);
+  }
+
+  .hero-meta span { color: var(--oro); margin-right: 6px; }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--rojo);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    box-shadow: 0 2px 12px var(--sombra);
+  }
+
+  nav a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 14px;
+    padding: 14px 28px;
+    border-right: 1px solid rgba(255,255,255,0.12);
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+
+  nav a:hover, nav a.active {
+    background: rgba(0,0,0,0.2);
+    color: #fff;
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ── INTRO STRIP ── */
+  .intro-strip {
+    background: var(--crema);
+    border-bottom: 3px solid var(--oro);
+    padding: 40px 0;
+  }
+
+  .intro-strip .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .intro-block h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--cafe);
+  }
+
+  .intro-block h2::before {
+    content: '▍';
+    color: var(--rojo);
+    margin-right: 8px;
+  }
+
+  .intro-block p {
+    font-size: 15px;
+    color: var(--cafe-claro);
+  }
+
+  /* ── TEAM ── */
+  .team-section {
+    background: var(--cafe);
+    color: var(--crema);
+    padding: 48px 0;
+  }
+
+  .team-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 28px;
+    color: var(--oro);
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+
+  .team-card {
+    background: rgba(245,237,214,0.08);
+    border: 1px solid rgba(212,160,23,0.25);
+    border-radius: 4px;
+    padding: 20px 16px;
+    text-align: center;
+    transition: background 0.2s;
+  }
+
+  .team-card:hover { background: rgba(245,237,214,0.14); }
+
+  .team-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--rojo);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #fff;
+    margin: 0 auto 12px;
+  }
+
+  .team-card .name {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--crema);
+  }
+
+  .team-card .code {
+    font-size: 11px;
+    color: var(--oro);
+    margin-top: 4px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  /* ── WEEKS ── */
+  .weeks-section { padding: 64px 0; }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .section-header .eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 4px;
+    font-size: 13px;
+    color: var(--rojo);
+    margin-bottom: 8px;
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--cafe);
+  }
+
+  /* ── WEEK CARD ── */
+  .week-card {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0;
+    margin-bottom: 56px;
+    border: 1px solid rgba(59,42,26,0.12);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px var(--sombra);
+    transition: box-shadow 0.3s;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .week-card:hover { box-shadow: 0 8px 40px rgba(59,42,26,0.2); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .week-card:nth-child(1) { animation-delay: 0.1s; }
+  .week-card:nth-child(2) { animation-delay: 0.2s; }
+  .week-card:nth-child(3) { animation-delay: 0.3s; }
+  .week-card:nth-child(4) { animation-delay: 0.4s; }
+
+  .week-tab {
+    background: var(--rojo);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    text-align: center;
+  }
+
+  .week-tab .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    line-height: 1;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .week-tab .label {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+  }
+
+  .week-tab .icon {
+    font-size: 1.8rem;
+    margin-top: 16px;
+  }
+
+  .week-body {
+    background: #fff;
+    padding: 32px 36px;
+  }
+
+  .week-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--cafe);
+  }
+
+  .week-topic {
+    font-size: 13px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    color: var(--gris);
+    margin-bottom: 20px;
+  }
+
+  .args-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .arg-box {
+    border-radius: 4px;
+    padding: 20px;
+  }
+
+  .arg-box.favor {
+    background: #EAF4EA;
+    border-left: 4px solid #27AE60;
+  }
+
+  .arg-box.contra {
+    background: #FDECEA;
+    border-left: 4px solid var(--rojo);
+  }
+
+  .arg-box h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+
+  .arg-box.favor h4 { color: #1E8449; }
+  .arg-box.contra h4 { color: var(--rojo); }
+
+  .arg-box ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .arg-box ul li {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--cafe);
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    gap: 8px;
+  }
+
+  .arg-box ul li:last-child { border-bottom: none; }
+
+  .arg-box.favor ul li::before { content: '✓'; color: #27AE60; font-weight: 700; flex-shrink: 0; }
+  .arg-box.contra ul li::before { content: '✗'; color: var(--rojo); font-weight: 700; flex-shrink: 0; }
+
+  .conclusion-box {
+    background: var(--crema);
+    border: 1px solid rgba(212,160,23,0.4);
+    border-left: 4px solid var(--oro);
+    border-radius: 4px;
+    padding: 20px 24px;
+  }
+
+  .conclusion-box h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 13px;
+    color: var(--cafe-claro);
+    margin-bottom: 8px;
+  }
+
+  .conclusion-box p {
+    font-size: 14.5px;
+    font-style: italic;
+    color: var(--cafe);
+    line-height: 1.7;
+  }
+
+  /* ── SOURCES ── */
+  .sources-section {
+    background: var(--crema);
+    border-top: 3px solid var(--oro);
+    padding: 56px 0;
+  }
+
+  .sources-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 28px;
+    color: var(--cafe);
+  }
+
+  .sources-section h2::before {
+    content: '§ ';
+    color: var(--rojo);
+  }
+
+  .sources-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sources-list li {
+    font-size: 14px;
+    color: var(--cafe-claro);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .sources-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--rojo);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--cafe);
+    color: rgba(245,237,214,0.5);
+    text-align: center;
+    padding: 32px;
+    font-size: 13px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+  }
+
+  footer strong { color: var(--oro); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .hero-content { padding: 36px 24px 40px 36px; }
+    .intro-strip .container { grid-template-columns: 1fr; }
+    .week-card { grid-template-columns: 1fr; }
+    .week-tab { flex-direction: row; justify-content: flex-start; gap: 16px; padding: 20px 24px; }
+    .week-tab .num { font-size: 2.5rem; }
+    .args-grid { grid-template-columns: 1fr; }
+    .container { padding: 0 20px; }
+    .week-body { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-flag"></div>
+  <div class="hero-badge">REALIDAD NACIONAL · UCS 2026-1</div>
+  <div class="hero-content">
+    <div class="hero-label">Weblog · Evaluación Continua EC1</div>
+    <h1>Construyendo la<br><em>Nación Peruana</em></h1>
+    <p class="hero-sub">Un recorrido por los debates históricos, políticos y sociales que forjaron nuestra identidad como república.</p>
+    <div class="hero-meta">
+      <div><span>Docente:</span>Auroni Cenepo Gutiérrez</div>
+      <div><span>Curso:</span>Realidad Nacional</div>
+      <div><span>Semanas:</span>01 – 04 · 2026-1</div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <a href="#sobre" class="active">Sobre el Blog</a>
+  <a href="#equipo">Equipo</a>
+  <a href="#semana1">Semana 1</a>
+  <a href="#semana2">Semana 2</a>
+  <a href="#semana3">Semana 3</a>
+  <a href="#semana4">Semana 4</a>
+  <a href="#fuentes">Fuentes</a>
+</nav>
+
+<!-- INTRO -->
+<section class="intro-strip" id="sobre">
+  <div class="container">
+    <div class="intro-block">
+      <h2>Resultado de Aprendizaje</h2>
+      <p>El estudiante identifica información confiable sobre la evolución política, económica y social referida a la construcción de la identidad nacional durante la formación de la República del Perú, produciendo reflexiones críticas mediante la discusión de interrogantes analíticos.</p>
+    </div>
+    <div class="intro-block">
+      <h2>Metodología del Blog</h2>
+      <p>Cada semana el equipo debatió preguntas analíticas dividiéndose en dos posturas: argumentos <strong>a favor</strong> y argumentos <strong>en contra</strong>. Luego se sintetizaron conclusiones grupales y se registraron fuentes académicas en formato APA 7.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPO -->
+<section class="team-section" id="equipo">
+  <div class="container">
+    <h2>Integrantes del Equipo</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">A</div>
+        <div class="name">Agüero Flores, Angeles Saori</div>
+        <div class="code">Integrante 01</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">K</div>
+        <div class="name">Cornejo Huarcaya, Kiara Mercedes</div>
+        <div class="code">Integrante 02</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">M</div>
+        <div class="name">Narrea Garcia, Mirella Corina</div>
+        <div class="code">Integrante 03</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">B</div>
+        <div class="name">Suarez Huallpa, Brisa Ahelim</div>
+        <div class="code">Integrante 04</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">D</div>
+        <div class="name">Valdivia Zegarra, Daniela Luciana</div>
+        <div class="code">Integrante 05</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">J</div>
+        <div class="name">Vilchez Trujillo, Josué Natanael</div>
+        <div class="code">Integrante 06</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEMANAS -->
+<section class="weeks-section" id="semana1">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">ACTIVIDADES SEMANALES</div>
+      <h2>Debates y Reflexiones</h2>
+    </div>
+
+    <!-- SEMANA 1 -->
+    <div class="week-card">
+      <div class="week-tab">
+        <div class="num">01</div>
+        <div class="label">SEMANA</div>
+        <div class="icon">🏛️</div>
+      </div>
+      <div class="week-body" id="s1">
+        <h3>La República Peruana en sus Inicios</h3>
+        <div class="week-topic">PREGUNTA DE DISCUSIÓN · ¿Los cambios que trajo la República pueden considerarse avances con respecto a su pasado colonial?</div>
+        <div class="args-grid">
+          <div class="arg-box favor">
+            <h4>✦ Argumentos a Favor</h4>
+            <ul>
+              <li>El fin del absolutismo y la instauración de la soberanía popular introdujeron principios como la división de poderes y la alternancia en el gobierno.</li>
+              <li>La igualdad jurídica y la ciudadanía reemplazaron el sistema de castas coloniales, introduciendo la idea de derechos universales.</li>
+              <li>La apertura comercial con países como Inglaterra permitió diversificar las relaciones económicas más allá del monopolio español.</li>
+              <li>Las permanencias coloniales (idioma, administración, élites criollas) dieron estabilidad inicial al nuevo Estado sin caer en el caos total.</li>
+            </ul>
+          </div>
+          <div class="arg-box contra">
+            <h4>✦ Argumentos en Contra</h4>
+            <ul>
+              <li>El poder pasó del rey a militares locales: el caudillismo generó golpes de Estado constantes, haciendo del derecho al voto una ficción.</li>
+              <li>La igualdad ante la ley no se cumplió en la práctica; indígenas y campesinos siguieron excluidos de derechos, educación y participación política.</li>
+              <li>La economía continuó siendo primario-exportadora, beneficiando a pocos y manteniendo la dependencia estructural heredada del virreinato.</li>
+              <li>Se perdieron alrededor de 37 lenguas indígenas (mochica, culle, puquina), debilitando la diversidad cultural del país.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="conclusion-box">
+          <h4>⟢ Conclusión del Equipo</h4>
+          <p>La Independencia del Perú fue un <em>avance importante pero gradual y con límites claros</em>: permitió crear un Estado propio con soberanía y nuevas instituciones, y las estructuras coloniales preservadas dieron estabilidad inicial. Sin embargo, continuaron los problemas del virreinato —desigualdad, poder en manos de élites, economía extractiva— por lo que el cambio fue más formal que real para la mayoría de la población.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEMANA 2 -->
+    <div class="week-card" id="semana2">
+      <div class="week-tab">
+        <div class="num">02</div>
+        <div class="label">SEMANA</div>
+        <div class="icon">⚖️</div>
+      </div>
+      <div class="week-body" id="s2">
+        <h3>Democracia y Autoritarismo en la República Peruana</h3>
+        <div class="week-topic">PREGUNTA DE DISCUSIÓN · ¿Pueden considerarse hechos democratizadores la Reforma Agraria de Velasco y la Reforma Neoliberal de Fujimori?</div>
+        <div class="args-grid">
+          <div class="arg-box favor">
+            <h4>✦ Argumentos a Favor</h4>
+            <ul>
+              <li>La Reforma Agraria de Velasco (1969) redistribuyó millones de hectáreas, eliminó el sistema latifundista e incorporó al campesinado como actor social con mayores derechos.</li>
+              <li>Las reformas neoliberales de Fujimori estabilizaron la economía tras la hiperinflación, ampliando el acceso a bienes, servicios y oportunidades económicas.</li>
+              <li>Ambas reformas buscaron reducir desigualdades estructurales e incluir a sectores históricamente excluidos, lo que puede entenderse como democratización social.</li>
+              <li>Fujimori llegó al poder mediante elecciones competitivas (1990) y aprobó la Constitución de 1993 por referéndum, conservando ciertos mecanismos formales de participación.</li>
+            </ul>
+          </div>
+          <div class="arg-box contra">
+            <h4>✦ Argumentos en Contra</h4>
+            <ul>
+              <li>La Reforma Agraria se aplicó bajo un gobierno militar sin elecciones: no respetó las reglas democráticas, la libertad de prensa ni los controles institucionales.</li>
+              <li>El Autogolpe de Fujimori en 1992 disolvió el Congreso, concentró el poder en el Ejecutivo y debilitó la separación de poderes.</li>
+              <li>En ambos gobiernos se censuró o presionó a medios de comunicación, limitando el pluralismo y la libertad de expresión.</li>
+              <li>Hubo graves violaciones a los derechos humanos: Masacre de Barrios Altos, La Cantuta, y la red de corrupción de Vladimiro Montesinos.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="conclusion-box">
+          <h4>⟢ Conclusión del Equipo</h4>
+          <p>Las reformas de Velasco Alvarado y Fujimori <em>no pueden considerarse plenamente democratizadoras</em>. Si bien generaron avances en inclusión social y estabilidad económica, también presentaron concentración de poder, limitación de la participación ciudadana y afectación de derechos. Su impacto fue mixto: respondieron a crisis profundas pero debilitaron la institucionalidad y las reglas del juego democrático.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEMANA 3 -->
+    <div class="week-card" id="semana3">
+      <div class="week-tab">
+        <div class="num">03</div>
+        <div class="label">SEMANA</div>
+        <div class="icon">💰</div>
+      </div>
+      <div class="week-body" id="s3">
+        <h3>Prosperidad Nacional y Corrupción</h3>
+        <div class="week-topic">PREGUNTA DE DISCUSIÓN · ¿Por qué los períodos de bonanza económica no fueron suficientes para convertir al Perú en un país desarrollado?</div>
+        <div class="args-grid">
+          <div class="arg-box favor">
+            <h4>✦ Argumentos a Favor (del uso estratégico actual)</h4>
+            <ul>
+              <li>El Estado ha implementado mecanismos como el canon minero, que distribuye ingresos a regiones y distritos, reduciendo la pobreza en zonas mineras.</li>
+              <li>A diferencia del ciclo del guano, hoy existen reglas fiscales e inversión en infraestructura que permiten un uso más estructurado de la bonanza.</li>
+              <li>La agroindustria y otras exportaciones no tradicionales muestran cierta diversificación frente al modelo exclusivamente extractivo del pasado.</li>
+              <li>Programas sociales coordinados por el MIDIS han mejorado el acceso a servicios básicos en zonas antes desatendidas.</li>
+            </ul>
+          </div>
+          <div class="arg-box contra">
+            <h4>✦ Argumentos en Contra</h4>
+            <ul>
+              <li>Los altos niveles de corrupción —desde la era del guano hasta la minería ilegal actual— desviaron y siguen desviando los recursos del desarrollo sostenible.</li>
+              <li>La insuficiente redistribución del ingreso mantuvo la desigualdad: en 2024, la pobreza afectó al 27,6% de la población pese al crecimiento económico.</li>
+              <li>El modelo primario-exportador persiste: manufactura, agroindustria y tecnología tienen baja participación en el PBI, con escasa innovación.</li>
+              <li>La informalidad laboral (alrededor del 70%) evidencia que los beneficios del crecimiento no fortalecen industrias formales ni diversifican la economía.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="conclusion-box">
+          <h4>⟢ Conclusión del Equipo</h4>
+          <p>El Perú ha tenido épocas de bonanza con altos ingresos, pero no logró desarrollarse por la <em>mala distribución de la riqueza y la corrupción</em>. En el pasado, el dinero se concentró en pocos y no benefició a la mayoría. Actualmente, el Estado usa parte de estos recursos en obras y programas sociales, lo que muestra avances, aunque el país aún no alcanza un desarrollo completo ni ha superado su dependencia del modelo extractivo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEMANA 4 -->
+    <div class="week-card" id="semana4">
+      <div class="week-tab">
+        <div class="num">04</div>
+        <div class="label">SEMANA</div>
+        <div class="icon">⚠️</div>
+      </div>
+      <div class="week-body" id="s4">
+        <h3>Terrorismo y Derechos Humanos: El Informe de la CVR</h3>
+        <div class="week-topic">PREGUNTA DE DISCUSIÓN · ¿Las recomendaciones de la CVR han sido suficientemente implementadas? ¿La clase política y las FFAA reaccionaron legítimamente contra el Informe?</div>
+        <div class="args-grid">
+          <div class="arg-box favor">
+            <h4>✦ Argumentos a Favor</h4>
+            <ul>
+              <li>Las recomendaciones de la CVR no han sido implementadas de forma integral: el Plan Integral de Reparaciones (PIR) tiene ejecución parcial y muchas víctimas no han recibido reparaciones económicas ni apoyo psicológico.</li>
+              <li>Los procesos judiciales han sido lentos e incompletos; la desigualdad y la ausencia del Estado en zonas rurales persisten más de 20 años después del informe.</li>
+              <li>La clase política y las FFAA reaccionaron críticamente porque el informe cuestionó su imagen institucional, señalando responsabilidades en violaciones de derechos humanos como las masacres de Barrios Altos y La Cantuta.</li>
+              <li>La reacción crítica evidenció resistencia a asumir responsabilidades y una estrategia de autoprotección institucional frente al señalamiento de culpas.</li>
+            </ul>
+          </div>
+          <div class="arg-box contra">
+            <h4>✦ Argumentos en Contra</h4>
+            <ul>
+              <li>El Estado sí ha realizado avances: el gobierno de Toledo recibió formalmente el informe en 2003, creó el Plan Integral de Reparaciones y abrió procesos penales contra responsables.</li>
+              <li>Hubo condenas judiciales concretas —incluyendo la del expresidente Fujimori— lo que demuestra una aplicación progresiva, aunque no completa, de las recomendaciones.</li>
+              <li>No toda la clase política ni las FFAA reaccionaron en bloque contra el informe: hubo sectores que aceptaron sus conclusiones y colaboraron con las recomendaciones.</li>
+              <li>La postura crítica de las FFAA puede interpretarse como defensa de su rol en la derrota del terrorismo, más que un rechazo absoluto a la verdad histórica.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="conclusion-box">
+          <h4>⟢ Conclusión del Equipo</h4>
+          <p>Las recomendaciones de la CVR <em>no han sido implementadas de forma suficiente ni integral</em>. Los avances existentes no han logrado garantizar plenamente justicia, reparación ni la superación de las desigualdades estructurales. La reacción de sectores políticos y militares fue mayoritariamente crítica, evidenciando resistencias a asumir responsabilidades. El proceso de reconciliación nacional sigue siendo incompleto y requiere mayor compromiso estatal y social.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FUENTES -->
+<section class="sources-section" id="fuentes">
+  <div class="container">
+    <h2>Referencias Bibliográficas</h2>
+    <ul class="sources-list">
+      <li>Basadre, J. (2005). <em>Historia de la República del Perú (1822–1933)</em> (8.ª ed.). Empresa Editora El Comercio.</li>
+      <li>Contreras, C., & Cueto, M. (2013). <em>Historia del Perú contemporáneo: Desde las luchas por la independencia hasta el presente</em> (5.ª ed.). Instituto de Estudios Peruanos.</li>
+      <li>Cubas, R., & Santa María, R. (2023). <em>Derechos indígenas en el Perú: cambios y permanencias del virreinato al centenario de la independencia</em>.</li>
+      <li>Rostworowski, M. (1999). <em>Historia del Tahuantinsuyo</em>. Instituto de Estudios Peruanos.</li>
+      <li>Levitsky, S., & Way, L. (2010). <em>Competitive authoritarianism: Hybrid regimes after the Cold War</em>. Cambridge University Press.</li>
+      <li>Cotler, J. (2005). <em>Clases, Estado y nación en el Perú</em>. Instituto de Estudios Peruanos.</li>
+      <li>Tanaka, M. (2005). <em>Democracia sin partidos: Perú 2000–2005</em>. Instituto de Estudios Peruanos.</li>
+      <li>Instituto de Estudios Peruanos. (2019). <em>La Reforma Agraria en el Perú: balance y perspectivas</em>. IEP.</li>
+      <li>De la Torre Zevallos, M. A. (2024). <em>Buscando la prosperidad: La nueva élite peruana y sus inversiones en la banca y agroexportación en los tiempos del guano (1860–1880)</em>.</li>
+      <li>Contraloría General de la República. (2023). <em>Informe sobre la gestión de los recursos públicos en gobiernos regionales y locales</em>. Lima.</li>
+      <li>Banco Mundial. (2023). <em>Perú: Panorama general</em>. Washington, D.C.: Banco Mundial.</li>
+      <li>Comisión de la Verdad y Reconciliación. (2003). <em>Informe final</em>. Lima: CVR.</li>
+      <li>Macher, S. (2023). <em>Las recomendaciones de la CVR, 20 años después</em>. Coordinadora Nacional de Derechos Humanos.</li>
+      <li>Cayuela Berruezo, M. (2019). Una historia de violencia: El Perú entre los años 1980 a 1997. <em>Scientia</em>, 21(21), 235–246.</li>
+      <li>Ministerio de Cultura del Perú. (2021). <em>L@s escolares preguntan, L@s historiadores responden</em>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>CONSTRUYENDO LA NACIÓN PERUANA</strong> &nbsp;·&nbsp; REALIDAD NACIONAL 2026-1 &nbsp;·&nbsp; UNIVERSIDAD CIENTÍFICA DEL SUR
+</footer>
+
+<script>
+  // Smooth scroll for nav links
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+
+  // Highlight active nav on scroll
+  const sections = document.querySelectorAll('[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    document.querySelectorAll('nav a').forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
